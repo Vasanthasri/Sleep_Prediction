@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Health Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .form-group input[type="number"]::-webkit-inner-spin-button,
+        .form-group input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #prediction-result {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .help-text {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Sleep Health Predictor</h1>
+    </div>
+    <div class="container">
+        <form id="prediction-form">
+            <div class="form-group">
+                <label for="Gender">Gender:</label>
+                <select id="Gender" name="Gender" required>
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Age">Age:</label>
+                <input type="number" id="Age" name="Age" required placeholder="e.g., 25">
+            </div>
+            <div class="form-group">
+                <label for="Occupation">Occupation:</label>
+                <select id="Occupation" name="Occupation" required>
+                    <option value="" disabled selected>Select your occupation</option>
+                    <option value="Nurse">Nurse</option>
+                    <option value="Engineer">Engineer</option>
+                    <option value="Accountant">Accountant</option>
+                    <option value="Sales Representative">Sales Representative</option>
+                    <option value="Doctor">Doctor</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Sleep Duration">Sleep Duration (hours):</label>
+                <input type="number" id="Sleep Duration" name="Sleep Duration" step="0.1" required placeholder="e.g., 7.5">
+            </div>
+            <div class="form-group">
+                <label for="Physical Activity Level">Physical Activity Level:</label>
+                <select id="Physical Activity Level" name="Physical Activity Level" required>
+                    <option value="" disabled selected>Select activity level</option>
+                    <option value="Low">Low (sedentary)</option>
+                    <option value="Moderate">Moderate (light exercise)</option>
+                    <option value="High">High (intense exercise)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Stress Level">Stress Level:</label>
+                <input type="number" id="Stress Level" name="Stress Level" required placeholder="e.g., 4">
+                <div class="help-text">Rate your average stress level from 0 to 10, where 0 is no stress and 10 is extremely stressed.</div>
+            </div>
+            <div class="form-group">
+                <label for="BMI Category">BMI Category:</label>
+                <select id="BMI Category" name="BMI Category" required>
+                    <option value="" disabled selected>Select BMI category</option>
+                    <option value="Underweight">Underweight (BMI < 18.5)</option>
+                    <option value="Normal weight">Normal weight (18.5 - 24.9)</option>
+                    <option value="Overweight">Overweight (25 - 29.9)</option>
+                    <option value="Obesity">Obesity (BMI ≥ 30)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Blood Pressure Systolic">Blood Pressure Systolic (mmHg):</label>
+                <input type="number" id="Blood Pressure Systolic" name="Blood Pressure Systolic" required placeholder="e.g., 120">
+            </div>
+            <div class="form-group">
+                <label for="Blood Pressure Diastolic">Blood Pressure Diastolic (mmHg):</label>
+                <input type="number" id="Blood Pressure Diastolic" name="Blood Pressure Diastolic" required placeholder="e.g., 80">
+            </div>
+            <div class="form-group">
+                <label for="Heart Rate">Heart Rate (bpm):</label>
+                <input type="number" id="Heart Rate" name="Heart Rate" required placeholder="e.g., 75">
+            </div>
+            <div class="form-group">
+                <label for="Daily Steps">Daily Steps:</label>
+                <input type="number" id="Daily Steps" name="Daily Steps" required placeholder="e.g., 10000">
+            </div>
+            <div class="form-group">
+                <label for="Sleep Disorder">Sleep Disorder:</label>
+                <select id="Sleep Disorder" name="Sleep Disorder" required>
+                    <option value="" disabled selected>Select sleep disorder</option>
+                    <option value="None">None</option>
+                    <option value="Insomnia">Insomnia</option>
+                    <option value="Sleep Apnea">Sleep Apnea</option>
+                </select>
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+        <div id="prediction-result"></div>
+    </div>
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            var data = {};
+            formData.forEach(function(value, key) {
+                data[key] = value;
+            });
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                var resultDiv = document.getElementById('prediction-result');
+                if (result.error) {
+                    resultDiv.innerHTML = `Error: ${result.error}`;
+                } else {
+                    resultDiv.innerHTML = `Predicted Quality of Sleep: ${result.prediction}`;
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
