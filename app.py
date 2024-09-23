@@ -24,7 +24,6 @@ model_features = [
 def home():
     return render_template('index.html')
 
-@app.route('/predict', methods=['POST'])
 def predict():
     try:
         # Extract form data
@@ -40,7 +39,7 @@ def predict():
         sleep_disorder = data.get('Sleep Disorder')
         
         # Initialize prediction
-        prediction = "Good"
+        prediction = "Average"
         
         # Check sleep duration
         if sleep_duration < 4:
@@ -49,6 +48,8 @@ def predict():
             prediction = "Poor"
         elif sleep_duration <= 7:
             prediction = "Average"
+        else:
+            prediction = "Good"
         
         # Check blood pressure
         if blood_pressure_systolic < 90 or blood_pressure_diastolic < 60:
@@ -76,7 +77,6 @@ def predict():
 
     except Exception as e:
         return jsonify(error=f"An error occurred: {str(e)}"), 400
-
 
 def preprocess_input(df):
     # Replace empty strings with NaN
